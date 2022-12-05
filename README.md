@@ -1,12 +1,13 @@
 
+
 ### Slow Coffee :coffee:
 ---
 **OS :** Windows  
-**Language :** Java, Javascript, CSS, HTML, etc. 
-**Framework :** Spring, Mybatis 
-**Server :** Apache Tomcat 9.0 with JSP 
-**Database :** Oracle  
-**(API) :** kakao 주소 & pay, toss pay
+**Language :** Java, Javascript, CSS, HTML, etc.  
+**Framework :** Spring, Mybatis  
+**Server :** Apache Tomcat 9.0 with JSP  
+**Database :** Oracle   
+**(API) :** kakao 주소 & pay, toss pay  
 
 **Citations:** https://github.com/technext/fruitkha original html template
 
@@ -26,7 +27,7 @@ Oracle Database 11gR2 Express Edition for Windows x64 :: link: https://www.oracl
 Windows 64-bit with JDK 11 included :: link: https://www.oracle.com/database/sqldeveloper/technologies/download/
 
 #### 4. Apache Tomcat
-32-bit/64-bit Windows Service Installer :: link: https://tomcat.apache.org/download-80.cgi 
+32-bit/64-bit Windows Service Installer :: link: https://tomcat.apache.org/download-90.cgi
     
 #### 5. Github
 < 3joe.sql>, < sj > :: link: https://github.com/jsy4/SlowCoffee
@@ -47,8 +48,7 @@ Windows 64-bit with JDK 11 included :: link: https://www.oracle.com/database/sql
 
 &nbsp;&nbsp;&nbsp;&nbsp;**1.3** Make a connection using sam, tiger (green + button on top left)
 
-&nbsp;&nbsp;&nbsp;&nbsp;**1.4** Run the file < 3joe.sql >(github)
-(individual run is ctrl + enter)
+&nbsp;&nbsp;&nbsp;&nbsp;**1.4** Run the file < 3joe.sql >(github) (individual run is ctrl + enter)
 
 
 #### 2.Spring
@@ -69,10 +69,11 @@ Windows 64-bit with JDK 11 included :: link: https://www.oracle.com/database/sql
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;add sj/lombok/**lombok.jar**
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If *lombok does not work(getterSette error)*: create getters and setters for sj/src/main/java/com.javassem.domain VOs
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If *lombok does not work(getterSette error)*: create getters and setters for sj/src/main/java/com.javassem.domain VOs  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: right click > Source > Generate Getters and Setters for all VO
 
-&nbsp;&nbsp;&nbsp;&nbsp;**2.4** create Server: click Window > Show View > Other > Servers > right click > New Server > Apache > Tomcat v8.0 > select where Tomcat is installed > Finish
+&nbsp;&nbsp;&nbsp;&nbsp;**2.4** create Server: click Window > Show View > Other > Servers > right click > New Server >    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apache > Tomcat v8.0 > select where Tomcat is installed > Finish
 
 &nbsp;&nbsp;&nbsp;&nbsp;**2.5** open with chrome: Window > browser > Chrome
 
@@ -114,7 +115,17 @@ change ip address @192.168.0.77:1521:xe to @(your local ip address):1521/xe
  **'방문자용 메인화면'** (customer mode): see products, add products to bag, saved bag contents during logout, change bag contents during checkout, checkout api available in different modes(card, kakao pay, toss), contact with questions, individual mypage to see orders and contact questions, search products
  
 ---
+###  :x: :: Errors :: 에러 발생시
+check ::아래 것들 확인하기     
+**1. FileName:** Downloaded file will be **SlowCoffee-main.zip** --> unzip to folder named **sj**
+**2. Maven:** right click project (sj) >Maven > Update Project
+**3. Server:** Window > Show view > Other > Servers > Tomcat v9.0 > right click > *Clean*
+**5. Spring:** right click project (sj) > Spring > *Remove Spring Project Nature*;  right click project (sj) > Spring > *add Spring Project Nature*
+**6. DB:** Error could occur saying step <=0 --> in that case, in views/index.jsp, change *(step to step +1)* or add the products before running index
+**7.DB:** Check root-context.xml ip address to be your local ip address
+**8.VO:** if lombok @Data doesn't work create getters and setters for each VO
 
+---
 ## Customer View
 **방문자용 메인화면**
 
