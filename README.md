@@ -117,13 +117,13 @@ change ip address @192.168.0.77:1521:xe to @(your local ip address):1521/xe
 ---
 ###  :x: :: Errors :: 에러 발생시
 check ::아래 것들 확인하기     
-**1. FileName:** Downloaded file will be **SlowCoffee-main.zip** --> unzip to folder named **sj**
-**2. Maven:** right click project (sj) >Maven > Update Project
-**3. Server:** Window > Show view > Other > Servers > Tomcat v9.0 > right click > *Clean*
-**5. Spring:** right click project (sj) > Spring > *Remove Spring Project Nature*;  right click project (sj) > Spring > *add Spring Project Nature*
-**6. DB:** Error could occur saying step <=0 --> in that case, in views/index.jsp, change *(step to step +1)* or add the products before running index
-**7.DB:** Check root-context.xml ip address to be your local ip address
-**8.VO:** if lombok @Data doesn't work create getters and setters for each VO
+**1. FileName:** Downloaded file will be **SlowCoffee-main.zip** --> unzip to folder named **sj**  
+**2. Maven:** right click project (sj) >Maven > Update Project  
+**3. Server:** Window > Show view > Other > Servers > Tomcat v9.0 > right click > *Clean*  
+**5. Spring:** right click project (sj) > Spring > *Remove Spring Project Nature*;  right click project (sj) > Spring > *add Spring Project Nature*  
+**6. DB:** Error could occur saying step <=0 --> in that case, in views/index.jsp, change *(step to step +1)* or add the products before running index  
+**7.DB:** Check root-context.xml ip address to be your local ip address  
+**8.VO:** if lombok @Data doesn't work create getters and setters for each VO  
 
 ---
 ## Customer View
