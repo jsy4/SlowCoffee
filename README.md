@@ -2,6 +2,9 @@
 
 ### Slow Coffee :coffee:
 ---
+
+**PPT(pdf) link :** https://github.com/jsy4/SlowCoffee/blob/main/3%EC%A1%B0_Slow%20Coffee_Website.pdf
+
 **OS :** Windows  
 **Language :** Java, Javascript, CSS, HTML, etc.  
 **Framework :** Spring, Mybatis  
