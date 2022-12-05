@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- Alias 설정 -->
+	<typeAliases>
+		<typeAlias alias="CustomerVO" type="com.javassem.domain.CustomerVO" />
+		<typeAlias alias="ManagerVO" type="com.javassem.domain.ManagerVO" />
+		<typeAlias alias="ProductVO" type="com.javassem.domain.ProductVO" />
+		<typeAlias alias="QuestionVO" type="com.javassem.domain.QuestionVO" />
+		<typeAlias alias="ListOrderVO" type="com.javassem.domain.ListOrderVO" />
+		<typeAlias alias="AnswerVO" type="com.javassem.domain.AnswerVO"/>
+		<typeAlias alias="CriteriaVO" type="com.javassem.domain.CriteriaVO"/>
+	</typeAliases>
+
+</configuration>
+

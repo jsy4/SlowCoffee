@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserDAO">
+
+	<!-- 메니저 중복 아이디 체크 -->
+	<select id="checkMId" parameterType="ManagerVO"
+		resultType="ManagerVO">
+		SELECT * FROM MANAGER
+		WHERE id=#{id}
+	</select>
+	<!-- 메니저 아이디 로그인 체크 -->
+	<select id="loginManager" parameterType="ManagerVO"
+		resultType="ManagerVO">
+		SELECT * FROM MANAGER
+		WHERE id=#{id} AND pw=#{pw}
+	</select>
+	<!-- 고객 아이디 중복 체크 -->
+	<select id="checkId" parameterType="CustomerVO"
+		resultType="CustomerVO">
+		SELECT * FROM CUSTOMER
+		WHERE id=#{id}
+	</select>
+	<!-- 고객 로그인 체크 -->
+	<select id="loginCustomer" parameterType="CustomerVO"
+		resultType="CustomerVO">
+		SELECT cno, name, gender, id, pw, tel, email, addr
+		FROM
+		CUSTOMER
+		WHERE id=#{id} AND pw=#{pw}
+	</select>
+	<!-- 장바구니에 고객이 산 상품의 갯수 -->
+	<select id="selectCart" parameterType="ListOrderVO"
+		resultType="ListOrderVO">
+		SELECT ocnt
+		FROM LIST_ORDER
+		WHERE pno=#{pno} AND cno=#{cno}
+	</select>
+
+	<!-- Paging -->
+	<select id="getProductList" resultType="ProductVO"
+		parameterType="CriteriaVO">
+		<![CDATA[
+			SELECT *
+			FROM (
+					SELECT PNO,
+					IMG,
+					PNAME,
+					PRICE,
+					DESCRIPTION,
+					STOCK,
+					TYPE,
+					ROW_NUMBER() OVER(ORDER BY PNO DESC) AS RNUM
+			FROM PRODUCT WHERE PNO < 100000
+					) MP
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY PNO DESC
+		]]>
+	</select>
+	<select id="getProductList_1" resultType="ProductVO"
+		parameterType="CriteriaVO">
+		<![CDATA[
+			SELECT *
+			FROM (
+					SELECT PNO,
+					IMG,
+					PNAME,
+					PRICE,
+					DESCRIPTION,
+					STOCK,
+					TYPE,
+					ROW_NUMBER() OVER(ORDER BY PNO DESC) AS RNUM
+			FROM PRODUCT WHERE PNO < 100000 and type='capsule'
+					) MP
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY PNO DESC
+		]]>
+	</select>
+	<select id="getProductList_2" resultType="ProductVO"
+		parameterType="CriteriaVO">
+		<![CDATA[
+			SELECT *
+			FROM (
+					SELECT PNO,
+					IMG,
+					PNAME,
+					PRICE,
+					DESCRIPTION,
+					STOCK,
+					TYPE,
+					ROW_NUMBER() OVER(ORDER BY PNO DESC) AS RNUM
+			FROM PRODUCT WHERE PNO < 100000 and type='dripbag'
+					) MP
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY PNO DESC
+		]]>
+	</select>
+	<select id="getProductList_3" resultType="ProductVO"
+		parameterType="CriteriaVO">
+		<![CDATA[
+			SELECT *
+			FROM (
+					SELECT PNO,
+					IMG,
+					PNAME,
+					PRICE,
+					DESCRIPTION,
+					STOCK,
+					TYPE,
+					ROW_NUMBER() OVER(ORDER BY PNO DESC) AS RNUM
+			FROM PRODUCT WHERE PNO < 100000 and type='beans'
+					) MP
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY PNO DESC
+		]]>
+	</select>
+	<select id="getProductList2" resultType="ProductVO"
+		parameterType="CriteriaVO">
+		<![CDATA[
+		SELECT *
+		FROM (
+		        SELECT PNO,
+		               IMG,
+		               PNAME,
+		               PRICE,
+		               DESCRIPTION,
+		               STOCK,
+		               TYPE,
+		               ROW_NUMBER() OVER(ORDER BY PNO DESC) AS RNUM
+		         FROM PRODUCT WHERE PNO >= 100000
+		                       ) MP
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY PNO DESC
+		]]>
+	</select>
+	<select id="getProductList2_1" resultType="ProductVO"
+		parameterType="CriteriaVO">
+		<![CDATA[
+		SELECT *
+		FROM (
+		        SELECT PNO,
+		               IMG,
+		               PNAME,
+		               PRICE,
+		               DESCRIPTION,
+		               STOCK,
+		               TYPE,
+		               ROW_NUMBER() OVER(ORDER BY PNO DESC) AS RNUM
+		         FROM PRODUCT WHERE PNO >= 100000 and type='extraction'
+		                       ) MP
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY PNO DESC
+		]]>
+	</select>
+	<select id="getProductList2_2" resultType="ProductVO"
+		parameterType="CriteriaVO">
+		<![CDATA[
+		SELECT *
+		FROM (
+		        SELECT PNO,
+		               IMG,
+		               PNAME,
+		               PRICE,
+		               DESCRIPTION,
+		               STOCK,
+		               TYPE,
+		               ROW_NUMBER() OVER(ORDER BY PNO DESC) AS RNUM
+		         FROM PRODUCT WHERE PNO >= 100000 and type='grinder'
+		                       ) MP
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY PNO DESC
+		]]>
+	</select>
+	<select id="getProductList2_3" resultType="ProductVO"
+		parameterType="CriteriaVO">
+		<![CDATA[
+		SELECT *
+		FROM (
+		        SELECT PNO,
+		               IMG,
+		               PNAME,
+		               PRICE,
+		               DESCRIPTION,
+		               STOCK,
+		               TYPE,
+		               ROW_NUMBER() OVER(ORDER BY PNO DESC) AS RNUM
+		         FROM PRODUCT WHERE PNO >= 100000 and type='cup'
+		                       ) MP
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY PNO DESC
+		]]>
+	</select>
+	<select id="listCount" resultType="int">
+	<![CDATA[
+		SELECT COUNT(PNO)
+		  FROM PRODUCT
+		WHERE PNO > 0
+	]]>
+	</select>
+	<!-- 대답이 없는 질문들 리스트 -->
+	<select id="getQuestionList" resultType="QuestionVO">
+		SELECT * FROM QUESTION
+		WHERE qno NOT IN (SELECT qno FROM ANSWER)
+	</select>
+	<!-- 고객의 mypage에 보일 질문과 대답(있을 수도 없을 수도 있음) -->
+	<select id="getQuestionAnswer" parameterType="int"
+		resultType="hashmap">
+		SELECT Q.qno qno, Q.qname qname, Q.qmessage qmessage,
+		A.amessage amessage
+		FROM question Q LEFT OUTER JOIN answer A
+		ON Q.qno =
+		A.qno
+		WHERE Q.cno = #{cno}
+		ORDER BY Q.qno desc
+	</select>
+	<!-- 고객에게 자기 주문 내역 보이기 -->
+	<select id="getOrdersList" parameterType="int"
+		resultType="hashmap">
+		SELECT P.img img, P.pname pname, P.price price, O.ocnt
+		ocnt, O.lono lono
+		FROM product P inner join orders O
+		ON P.pno = O.pno
+		WHERE O.lono in (SELECT lono from finished_order WHERE
+		cno = #{cno})
+		ORDER BY lono desc
+	</select>
+	<!-- 메니저에게 고객들 주문 내역들 보이기 -->
+	<select id="getCustomersOrders" resultType="hashmap">
+		SELECT F.lono lono,
+		F.cno cno, P.pname pname, O.ocnt ocnt
+		FROM Finished_order F inner join
+		Orders O
+		ON F.lono = O.lono inner join Product P
+		ON O.pno = P.pno
+		ORDER
+		BY lono desc
+	</select>
+	<!-- 고객에게 자기 장바구니 내역 보이기 -->
+	<select id="getCartList" parameterType="ListOrderVO"
+		resultType="hashmap">
+		select P.img as img, P.pname as pname, P.price as
+		price, O.ocnt as ocnt, O.pno as pno
+		from product P inner join
+		list_order O
+		on P.pno = O.pno
+		where O.cno = #{cno}
+	</select>
+	<!-- 주문번호 만들기 -->
+	<select id="selectLono" resultType="integer">
+		select
+		finished_order_seq.nextval FROM DUAL
+	</select>
+	<!-- 물품 제고 확인 -->
+	<select id="selectStock" resultType="integer"
+		parameterType="integer">
+		SELECT stock
+		FROM product
+		WHERE pno =#{pno}
+	</select>
+	<!-- 회원 정보확인(잃어버린 비밀번호를 위해) -->
+	<select id="getCustomer" resultType="CustomerVO"
+		parameterType="hashmap">
+		SELECT *
+		FROM CUSTOMER
+		WHERE email = #{email} AND id=#{id}
+		order by cno desc
+	</select>
+	<!-- 회원 정보확인(잃어버린 비밀번호를 위해) -->
+	<select id="getCustomerInfo" resultType="CustomerVO"
+		parameterType="hashmap">
+		SELECT *
+		FROM CUSTOMER
+		WHERE email = #{email} AND id=#{id}
+		ORDER BY cno desc
+	</select>
+	<!-- 회원 정보확인(잃어버린 비밀번호를 위해) -->
+	<select id="duplicateCustomer" resultType="CustomerVO"
+		parameterType="CustomerVO">
+		SELECT *
+		FROM CUSTOMER
+		WHERE id = #{id}
+		order by cno desc
+	</select>
+	<!-- 제품 수정 -->
+	<update id="modifyProduct" parameterType="ProductVO">
+		UPDATE PRODUCT
+		SET img=#{img},
+		pname=#{pname},price=#{price},description=#{description},stock=#{stock}
+		WHERE pno=#{pno}
+	</update>
+	<!-- 장바구니 물품 갯수 수정 -->
+	<update id="updateCart" parameterType="ListOrderVO">
+		UPDATE LIST_ORDER
+		SET ocnt
+		= #{ocnt}
+		WHERE pno=#{pno} AND cno=#{cno}
+	</update>
+	<!-- 재고 줄이기 -->
+	<update id="decreaseStock" parameterType="hashmap">
+		UPDATE Product
+		SET stock = stock - #{ocnt}
+		WHERE pno = #{pno}
+	</update>
+	<!-- 재고 늘리기 -->
+	<update id="increaseStock" parameterType="hashmap">
+		UPDATE Product
+		SET stock = stock + #{ocnt}
+		WHERE pno = #{pno}
+	</update>
+	<!-- 회원정보 수정하기 -->
+	<update id="modifyCustomer" parameterType="CustomerVO">
+		UPDATE Customer
+		SET gender =#{gender}, name =#{name}, pw = #{pw}, tel = #{tel}, email =
+		#{email}, addr = #{addr}
+		WHERE cno = #{cno}
+	</update>
+	<!-- 회원 정보수정(잃어버린 비밀번호를 위해) -->
+	<update id="setCustomerPw" parameterType="hashmap">
+		UPDATE CUSTOMER
+		SET pw =
+		#{pw}
+		WHERE cno = #{cno}
+	</update>
+	<!-- 상품 지우기 -->
+	<delete id="deleteProduct" parameterType="ProductVO">
+		DELETE FROM PRODUCT
+		WHERE pno=#{pno}
+	</delete>
+	<!-- 장바구니에서 상품 지우기 -->
+	<delete id="removeCart" parameterType="ListOrderVO">
+		DELETE FROM LIST_ORDER
+		WHERE pno=#{pno} AND cno=#{cno}
+	</delete>
+	<!-- 장바구니 모두 지우기 -->
+	<delete id="deleteCart" parameterType="ListOrderVO">
+		DELETE FROM LIST_ORDER
+		WHERE cno=#{cno}
+	</delete>
+	<!-- 주문 지우기 2 -->
+	<delete id="deleteOrder" parameterType="integer">
+		DELETE FROM
+		FINISHED_ORDER
+		WHERE lono=#{lono}
+	</delete>
+	<!-- 주문 지우기 1 -->
+	<delete id="deleteOrders" parameterType="integer">
+		DELETE FROM ORDERS
+		WHERE
+		lono=#{lono}
+	</delete>
+	<!-- 답변 지우기 -->
+	<delete id="deleteAnswer" parameterType="AnswerVO">
+		delete from Answer
+		where
+		qno= #{qno}
+	</delete>
+	<!-- 질문 지우기 -->
+	<delete id="deleteQuestion" parameterType="QuestionVO">
+		delete from Question
+		where qno = #{qno}
+	</delete>
+	<!-- 회원 삭제 -->
+	<delete id="deleteAllOrders" parameterType="integer">
+		DELETE FROM orders
+		where lono = #{lono}
+	</delete>
+	<!-- 회원 삭제 -->
+	<delete id="deleteAllOrder" parameterType="integer">
+		DELETE FROM
+		finished_order
+		where lono = #{lono}
+	</delete>
+	<!-- 회원 삭제 -->
+	<delete id="deleteCustomer" parameterType="CustomerVO">
+		DELETE FROM customer
+		WHERE cno = #{cno}
+	</delete>
+	<!-- 회원 삭제 -->
+	<delete id="deleteAllAnswer" parameterType="AnswerVO">
+		DELETE FROM ANSWER
+		WHERE cno = #{cno}
+	</delete>
+	<!-- 회원 삭제 -->
+	<delete id="deleteAllQuestion" parameterType="QuestionVO">
+		DELETE FROM
+		QUESTION
+		WHERE cno = #{cno}
+	</delete>
+	<!-- 질문 하기 -->
+	<insert id="insertAnswer" parameterType="AnswerVO">
+		INSERT INTO
+		ANSWER(qno,mno,cno,amessage)
+		VALUES(#{qno},#{mno},#{cno},#{amessage})
+	</insert>
+	<!-- 상품 등록하기 (BEANS) -->
+	<insert id="insertProduct" parameterType="ProductVO">
+		<if test="img != null">
+			INSERT INTO PRODUCT(pno, img, pname, price, description, stock,type)
+			VALUES(product_seq.nextval,#{img},#{pname},#{price},#{description},#{stock},#{type})
+		</if>
+		<if test="img == null"> <!-- DELETE THIS LATER WHEN IMG WORKS -->
+			INSERT INTO PRODUCT(pno, pname, price, description, stock,type)
+			VALUES(product_seq.nextval,#{pname},#{price},#{description},#{stock},#{type})
+		</if>
+	</insert>
+	<!-- 상품 등록하기 (GOODS) -->
+	<insert id="insertProduct2" parameterType="ProductVO">
+		<if test="img != null">
+			INSERT INTO PRODUCT(pno, img, pname, price, description, stock,type)
+			VALUES(product2_seq.nextval,#{img},#{pname},#{price},#{description},#{stock},#{type})
+		</if>
+		<if test="img == null"> <!-- DELETE THIS LATER WHEN IMG WORKS -->
+			INSERT INTO PRODUCT(pno, pname, price, description, stock,type)
+			VALUES(product2_seq.nextval,#{pname},#{price},#{description},#{stock},{type})
+		</if>
+	</insert>
+	<!-- 메니저 등록하기 -->
+	<insert id="insertManager" parameterType="ManagerVO">
+		INSERT INTO
+		MANAGER(mno, name, gender, id, pw, tel, email, addr)
+		VALUES(manager_seq.nextval,#{name},#{gender},#{id},#{pw},#{tel},#{email},#{addr})
+	</insert>
+	<!-- 고객 장바구니에 더하기 -->
+	<insert id="insertCart" parameterType="ListOrderVO">
+		INSERT INTO
+		LIST_ORDER(cno,pno,ocnt)
+		VALUES(#{cno},#{pno},#{ocnt})
+	</insert>
+	<!-- 질문하기 -->
+	<insert id="insertQustion" parameterType="QuestionVO">
+		INSERT INTO
+		QUESTION(qno, cno, qname, qmessage, regdate)
+		VALUES(question_seq.nextval,#{cno},#{qname},#{qmessage},sysdate)
+	</insert>
+	<!-- 고객 등록하기 -->
+	<insert id="insertCustomer" parameterType="CustomerVO">
+		INSERT INTO
+		CUSTOMER(cno, name, gender, id, pw, tel, email, addr)
+		VALUES(customer_seq.nextval,#{name},#{gender},#{id},#{pw},#{tel},#{email},#{addr})
+	</insert>
+	<!-- 주문 등록하기 2 -->
+	<insert id="insertOrder" parameterType="hashmap">
+		INSERT INTO
+		FINISHED_ORDER(lono,cno,odrdate,addr)
+		VALUES(#{lono},#{cno},sysdate,#{addr})
+	</insert>
+	<!-- 주문 등록하기 1 -->
+	<insert id="insertOrders" parameterType="hashmap">
+		INSERT INTO
+		ORDERS(ono,lono,pno,ocnt)
+		VALUES(orders_seq.nextval, #{lono}, #{pno}, #{ocnt})
+	</insert>
+	<!-- chart(총 매출액) -->
+	<select id="getSalesListBy" resultType="map">
+	<![CDATA[
+	SELECT MONTH,NVL(SALES,0) SALES 
+	FROM (SELECT TO_NUMBER(TO_CHAR(F.ODRDATE,'MM')) MONTH,SUM(P.price*O.ocnt) SALES
+    	FROM FINISHED_ORDER F inner join Orders O 
+	    	on O.lono = F.lono
+	    	inner join Product P
+	    	on O.pno = P.pno
+	    	WHERE TO_CHAR(F.ODRDATE,'YYYY') = #{YEAR}
+	    GROUP BY TO_NUMBER(TO_CHAR(F.ODRDATE,'MM'))) A 
+		RIGHT JOIN
+		(SELECT ROWNUM MONTH FROM DICT WHERE ROWNUM <= 12) B 
+		USING(MONTH) ORDER BY 1
+	]]>
+	</select>
+	<!-- chart(총 매출 건 수) -->
+	<select id="getCountSalesListBy" resultType="map">
+	<![CDATA[
+	SELECT MONTH,NVL(SALESCOUNT,0) SALESCOUNT
+	FROM (SELECT TO_NUMBER(TO_CHAR(F.ODRDATE,'MM')) MONTH, count(F.lono) SALESCOUNT
+	    FROM FINISHED_ORDER F inner join Orders O 
+	    	on O.lono = F.lono
+	    	WHERE TO_CHAR(F.ODRDATE,'YYYY') = #{YEAR}
+	    GROUP BY TO_NUMBER(TO_CHAR(F.ODRDATE,'MM')))A 
+		RIGHT JOIN
+		(SELECT ROWNUM MONTH FROM DICT WHERE ROWNUM <= 12) B
+		 USING(MONTH) ORDER BY 1
+	]]>
+	</select>
+	<!-- 상품 이름 검색 -->
+	<select id="shop_search" parameterType="hashmap"
+		resultType="ProductVO">
+		SELECT * FROM PRODUCT
+		WHERE upper(pname) LIKE
+		upper('%${searchKeyword}%')
+		ORDER BY pno desc
+	</select>
+	<select id="getAllProductList" resultType="hashmap">
+	<![CDATA[
+		SELECT pno,img,pname,price,description,stock,type
+		FROM Product
+		WHERE pno < 100000
+	]]>
+	</select>
+	<select id="getAllProductList2" resultType="hashmap">
+	<![CDATA[
+		SELECT pno,img,pname,price,description,stock,type
+		FROM Product
+		WHERE pno >= 100000
+	]]>
+	</select>
+
+</mapper>
